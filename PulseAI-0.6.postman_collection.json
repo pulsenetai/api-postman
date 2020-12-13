@@ -1,0 +1,996 @@
+{
+	"info": {
+		"_postman_id": "d5ac94f2-f901-404c-adb1-93ac8087030a",
+		"name": "Pulse-AI-0.6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "0. create-account",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"{{PULSEAI_EMAIL}}\", \n\t\"password\":\"{{PULSEAI_PASSWORD}}\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/users",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "Creates an account with the PULSEAI_EMAIL and PULSEAI_PASSWORD envvars "
+			},
+			"response": []
+		},
+		{
+			"name": "1. get-token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cf1709df-aa67-4f67-a938-1e63da435f59",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"PULSEAI_TOKEN\", jsonData.token);"
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"email\":\"{{PULSEAI_EMAIL}}\", \n\t\"password\":\"{{PULSEAI_PASSWORD}}\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/tokens",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"tokens"
+					]
+				},
+				"description": "Receives the authentication token for the user account with the PULSEAI_EMAIL and PULSEAI_PASSWORD envvars "
+			},
+			"response": []
+		},
+		{
+			"name": "2. provision-things-device",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72b3e1a0-3f88-43b3-8064-0db637ece668",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"device\", \n\t\"name\":\"device1\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/things",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"things"
+					]
+				},
+				"description": "creates a device"
+			},
+			"response": []
+		},
+		{
+			"name": "2. provision-things-app",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d08e653a-4c04-4138-ba72-2100be4dd09e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"app\", \n\t\"name\":\"application1\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/things",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"things"
+					]
+				},
+				"description": "creates an app"
+			},
+			"response": []
+		},
+		{
+			"name": "2.  update-thing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "96b5c1f3-2e0a-497a-a42a-c702501da87b",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"device\", \n\t\"name\":\"bove-test-device\"\n\t\"metadata\": \"{\n  #channel_id\": \"11b4de05-dc63-44f0-bbec-3b4d083458fc\",\n  \"lora\": {\n    \"app_id\": \"2\",\n    \"dev_eui\": \"004a77012404d377\"\n  },\n  \"type\": \"lora\"\n}\"\n}\n\n",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/things/9cb2a7ff-e20a-4659-a83e-bf80c975d87b",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"things",
+						"9cb2a7ff-e20a-4659-a83e-bf80c975d87b"
+					]
+				},
+				"description": "updates a thing with a given id"
+			},
+			"response": []
+		},
+		{
+			"name": "2. get-provisioned-things",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ddd829ce-36e8-4763-bb0b-3e52b673bf4e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/things",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"things"
+					]
+				},
+				"description": "returns provisioned things"
+			},
+			"response": []
+		},
+		{
+			"name": "2. delete-provisioned-thing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9d41486c-3ec7-4d80-bfa5-33297c1cef20",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"type\":\"app\", \n\t\"name\":\"application1\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/things/:id",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"things",
+						":id"
+					],
+					"variable": [
+						{
+							"id": "f116a0fd-15d5-4cd3-9cf1-3387702df5f3",
+							"key": "id",
+							"value": "1",
+							"type": "string"
+						}
+					]
+				},
+				"description": "deletes a provisioned thing by id"
+			},
+			"response": []
+		},
+		{
+			"name": "3. create-channel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b83a658-6b0b-43fa-bb7e-c3caab5fb25f",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"channel1\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/channels",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"channels"
+					]
+				},
+				"description": "creates a channel\t"
+			},
+			"response": []
+		},
+		{
+			"name": "3. get-channels",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6d05a0bb-ed17-45de-be33-0b834ebdd6a3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/channels",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"channels"
+					]
+				},
+				"description": "returns exixting channels"
+			},
+			"response": []
+		},
+		{
+			"name": "3. update-channels",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "44c74b4f-7110-47c5-9904-fc916cee6e9e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"channel100\"\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/channels/:channelId",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						":channelId"
+					],
+					"variable": [
+						{
+							"id": "ee0c3c13-8a12-439b-94eb-25257ce82a3b",
+							"key": "channelId",
+							"value": "1",
+							"type": "string"
+						}
+					]
+				},
+				"description": "update channel with a given id"
+			},
+			"response": []
+		},
+		{
+			"name": "3. add-thing-to-channels",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7344de9f-0384-45b8-afd9-59cd2e217cbe",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/channels/:channelId/things/:thingId",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						":channelId",
+						"things",
+						":thingId"
+					],
+					"variable": [
+						{
+							"id": "5562b30d-c4ea-4f8d-bcaf-8449e910732c",
+							"key": "channelId",
+							"value": "1",
+							"type": "string"
+						},
+						{
+							"id": "a01a72d0-4013-4f73-8410-28adc257431d",
+							"key": "thingId",
+							"value": "3",
+							"type": "string"
+						}
+					]
+				},
+				"description": "adds a thing to a channel"
+			},
+			"response": []
+		},
+		{
+			"name": "3. get-channel-by-id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6d1653fe-1129-4e37-9dcf-a99cd83827c2",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/channels/:channelId",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						":channelId"
+					],
+					"variable": [
+						{
+							"id": "41be473e-e342-442a-af2b-3736699c6717",
+							"key": "channelId",
+							"value": "1",
+							"type": "string"
+						}
+					]
+				},
+				"description": "returns a channel with a given id"
+			},
+			"response": []
+		},
+		{
+			"name": "3. delete-channel",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1dd19af8-ad76-47e0-9735-c535e15630ae",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/channels/2",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						"2"
+					]
+				},
+				"description": "deletes a channel by id"
+			},
+			"response": []
+		},
+		{
+			"name": "3. remove-thing-to-channels",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3212b15f-cf4c-4cf7-acc3-d87ba62aa6a7",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{PULSEAI_TOKEN}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/channels/:channelId/things/:thingId",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"channels",
+						":channelId",
+						"things",
+						":thingId"
+					],
+					"variable": [
+						{
+							"id": "18a0d2ac-aba5-480a-9848-f48f4b497194",
+							"key": "channelId",
+							"value": "1",
+							"type": "string"
+						},
+						{
+							"id": "512d57a5-c8a2-4973-bfcf-8612f3bc9b25",
+							"key": "thingId",
+							"value": "3",
+							"type": "string"
+						}
+					]
+				},
+				"description": "removes a thing to a channel"
+			},
+			"response": []
+		},
+		{
+			"name": "4. send-message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "069dad43-df80-4c5e-908a-a21e45ab547d",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "d0b30229-21dc-472e-a878-fa7458b531d1"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"bn\":\"device1\",\n\t\t\"bt\":1.276020076026e+09, \n\t\t\"bu\":\"A\",\"bver\":5, \n\t\t\"n\":\"voltage\",\n\t\t\"u\":\"V\",\"v\":120.1\n\t}, \n\t{\n\t\t\"n\":\"current\",\n\t\t\"t\":-5,\n\t\t\"v\":1.2\n\t}, \n\t{\n\t\t\"n\":\"current\",\n\t\t\"t\":-4,\n\t\t\"v\":1.3\n\t}\n]",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/http/channels/:channelId/messages",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"http",
+						"channels",
+						":channelId",
+						"messages"
+					],
+					"variable": [
+						{
+							"id": "73393ffa-6b51-4efe-97bb-c00d9c0548ab",
+							"key": "channelId",
+							"value": "1",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4. gw-send-message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ca1886dd-e7d3-4290-9571-2af5aed933c3",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "eb819855-5b30-4eb4-8889-531f25266901"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"t\":1598227567.89,  \n\t\t\"n\":\"location-lon\",\n\t\t\"v\":-1.32953\n\t}, \n\t{\n\t\t\"t\":1598227567.89,  \n\t\t\"n\":\"location-lat\",\n\t\t\"v\":36.88951\n\t}\n]",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL}}/http/channels/bedbba31-5b6c-46f8-abb1-814b8b0a5496/messages",
+					"host": [
+						"{{PULSEAI_BASE_URL}}"
+					],
+					"path": [
+						"http",
+						"channels",
+						"bedbba31-5b6c-46f8-abb1-814b8b0a5496",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. influxdb-reader",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb66320c-05f9-4b84-8173-cd868a80ca93",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "13f3d10a-749f-4af0-bd55-fd0b3a0a6aac"
+					}
+				],
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL_HTTP}}:8903/channels//9cb90f1e-897e-434b-b353-f50d0ae2e52d/messages",
+					"host": [
+						"{{PULSEAI_BASE_URL_HTTP}}"
+					],
+					"port": "8903",
+					"path": [
+						"channels",
+						"",
+						"9cb90f1e-897e-434b-b353-f50d0ae2e52d",
+						"messages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. cassandra-reader",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8cbd47e3-d799-4604-941a-0680dee8fe01",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "d0b30229-21dc-472e-a878-fa7458b531d1"
+					}
+				],
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL_HTTP}}:8905/channels/:channelId/messages",
+					"host": [
+						"{{PULSEAI_BASE_URL_HTTP}}"
+					],
+					"port": "8905",
+					"path": [
+						"channels",
+						":channelId",
+						"messages"
+					],
+					"variable": [
+						{
+							"id": "441df687-2db3-4820-8c90-33f4bbfddc9e",
+							"key": "channelId",
+							"value": "1",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5. mongodb-reader",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b2967549-eda0-416d-9528-e098b9d490c2",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "d0b30229-21dc-472e-a878-fa7458b531d1"
+					}
+				],
+				"url": {
+					"raw": "{{PULSEAI_BASE_URL_HTTP}}:8905/channels/:channelId/messages",
+					"host": [
+						"{{PULSEAI_BASE_URL_HTTP}}"
+					],
+					"port": "8905",
+					"path": [
+						"channels",
+						":channelId",
+						"messages"
+					],
+					"variable": [
+						{
+							"id": "9adcf708-050b-45d3-8810-10263be158f6",
+							"key": "channelId",
+							"value": "1",
+							"type": "string"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1a399d97-f13e-499e-8558-3a5eb23ffe6b",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "7a174bfa-7e28-4d23-b0fd-6180686e89f4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
